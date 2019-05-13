@@ -1,4 +1,7 @@
 cmake_minimum_required(VERSION 3.8)
+
+set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_PATH}/scripts/buildsystems/vcpkg.cmake")
+
 project(vulkan_tutorial)
 
 set(CMAKE_CXX_STANDARD 14)
@@ -31,15 +34,12 @@ list(APPEND LIBS ${VULKAN_LIBRARY})
 message(STATUS "Vulkan Include dirs: ${Vulkan_INCLUDE_DIRS} and libs: ${VULKAN_LIBRARY}")
 
 # Config glfw3
-option(GLFW_BUILD_DOCS OFF)
-option(GLFW_BUILD_EXAMPLES OFF)
-option(GLFW_BUILD_TESTS OFF)
-add_subdirectory(3rd_party/glfw)
-include_directories(3rd_party/glfw/include)
+find_package(glfw3 CONFIG REQUIRED)
 list(APPEND LIBS glfw)
 
 # Config glm
-include_directories(3rd_party/glm)
+find_package(glm CONFIG REQUIRED)
+list(APPEND LIBS glm)
 
 # Config vulkan header
 include_directories(3rd_party/vulkan-header)
